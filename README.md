@@ -22,7 +22,7 @@ Run the `./bin/KerrEffect.exe` or the `./run.sh` file. Available flags:
 - `--tau`:  The pulse duaration in femtosecond. The default value is 30.0
 - `--wl0`:  The cetral wavelength of the optical pulse in nanometer. The default value is 800.0
 - `--dt`:  The temporal distance between two datapoints in femtosecond. The default value is 0.1
-- `--output`:  The name of the output csv file. The file is created in the `./data` folder, and the .csv extension is appended to it. The default value is `output`
+- `--output`:  The name of the output csv file. The file is created in the `./data` folder, and the `.csv` extension is appended to it. The default value is `output`
 
 Makefile is written to provide an easy way to delete an already existing compiled executables (`make clean`), compile the source code into executable file (`make build`) and run it (`make run`).
 
