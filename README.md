@@ -1,39 +1,32 @@
-# CUDAatScaleForTheEnterpriseCourseProjectTemplate
-This is a template for the course project for the CUDA at Scale for the Enterprise
+# GPU Specialization Capstone Project: Nonlinear optical Kerr effect
+This repository contains the code base for the solution of the "Peer-graded Assignment: GPU Specialization Capstone Project" on Coursera.
 
 ## Project Description
 
-This project was created as a playground for investigating various filtering and image processing capabilities of the CUDA NPP (NVIDIA 2D Image and Signal Processing Performance Primitives) Library. Currently, the project provides an example usecasefor the following NPP functions:
+In this project, the [4th order Runge-Kutta differential equation solver](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods) was implemented to numerically solve the [nonlinear Schrödinger equation](https://en.wikipedia.org/wiki/Nonlinear_Schr%C3%B6dinger_equation) in dispersionless case. This problem has a simple analytical solution, which was compared to the result of the numrical simulation.
 
-- AddC from Image Arithmetic And Logical Operations
-- Erode from Image Morphological Operations
+The equation describes an optical pulse's evolution during the propagation in nonlinear medium (i.e. optical fiber). The code calculates this evolution on a given temporal grid.
 
-The project allows to choose the input image file in BMP or PGM format, specify the needed filter and provide the filename or directory for the output file. Currently, the project allows processing only one image, since there is a problem with NPP kernel execution, which fails when you try to run the same kernel again. The project requires a Coursera Lab environment to execute since it provides the configured CUDA environment and doesn't require additional configuration, which currently is out of the scope of this project.
+The code utalizes pinned memory, shared memory and constant memory for enchanced performance and does the calculations on cuFloatComplex arrays.
 
 The project structure follows the template from https://github.com/PascaleCourseraCourses/CUDAatScaleForTheEnterpriseCourseProjectTemplate.
 
 ## How to run it
 
-Run the `./bin/x86_64/linux/release/imageProcessing.exe` or the `./run.sh` file. Available flags:
+Run the `./bin/KerrEffect.exe` or the `./run.sh` file. Available flags:
 
-- `--addNumber`: What should be added to the image with the AddC function. The default value is 100.
-- `--input`: The path for the input file. The default is the ./data/Lena.pgm image.
+- `--threadsPerBlock`:  The number of thread in a block on the device. The default value is 256
+- `--notp`:  The number of points in the temporal domain. The default value is 2048
+- `--thickness`:  The thickness of the material in millimeter. The default value is 1.0
+- `--intensity`:  The intensity of the optical pulse in TW/cm2. The default value is 10.0
+- `--tau`:  The pulse duaration in femtosecond. The default value is 30.0
+- `--wl0`:  The cetral wavelength of the optical pulse in nanometer. The default value is 800.0
+- `--dt`:  The temporal distance between two datapoints in femtosecond. The default value is 0.1
+- `--output`:  The name of the output csv file. The file is created in the `./data` folder, and the .csv extension is appended to it. The default value is `output`
 
-Makefile is written to provide an easy way to delete an already existing compiled executables (`make clean`), compile the source code into executable file (`make build`) and run it (`make run`). The latter one also compiles it before running it.
+Makefile is written to provide an easy way to delete an already existing compiled executables (`make clean`), compile the source code into executable file (`make build`) and run it (`make run`).
 
-## Results
-
-![Original image](https://github.com/Lehohel/CUDAatScaleForTheEnterprise/blob/main/images/Lena.jpg)
-
-Fig 1. The original test image.
-
-![Image after add function](https://github.com/Lehohel/CUDAatScaleForTheEnterprise/blob/main/images/Lena_add.jpg)
-
-Fig 2. The image after the AddC function was applied to it with the default value.
-
-![Eroded imgage](https://github.com/Lehohel/CUDAatScaleForTheEnterprise/blob/main/images/Lena_erode.jpg)
-
-Fig 3. The image after the Erode function is applied to it.
+The `./run.sh` bash script provides examples for running the code with default arguments and with non-default arguments.
 
 ## Code Organization
 
@@ -43,10 +36,7 @@ This folder should hold all binary/executable code that is built automatically o
 ```data/```
 This folder should hold all example data in any format. If the original data is rather large or can be brought in via scripts, this can be left blank in the respository, so that it doesn't require major downloads when all that is desired is the code/structure.
 
-```images/```
-Images in browser viewable format. It contain the output of the code in jpg format.
-
-```lib/```
+```Common/```
 Any libraries that are not installed via the Operating System-specific package manager should be placed here, so that it is easier for inclusion/linking.
 
 ```src/```
