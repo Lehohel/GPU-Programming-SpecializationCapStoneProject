@@ -8,7 +8,7 @@ FILENAME = KerrEffect
 all: clean build run
 
 build:
-	$(CXX) ./src/$(FILENAME).cu -o ./bin/$(FILENAME).exe -ccbin g++ -I./Common -lcudart -lcuda --std c++17
+	$(CXX) ./src/$(FILENAME).cu -o ./bin/$(FILENAME).exe -I./Common -lcuda
 
 run:
 	./bin/$(FILENAME).exe $(ARGS)
